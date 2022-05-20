@@ -40,12 +40,11 @@
                     android:text="随机跳词" />
 
                 <TextView
-                    android:id="@+id/tv_title"
+                    android:id="@+id/word"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
-                    android:text="无果"
                     android:textColor="@color/black"
                     android:textSize="40sp"
                     android:textStyle="bold" />
@@ -56,11 +55,10 @@
                     android:background="@android:color/darker_gray" />
 
                 <TextView
-                    android:id="@+id/tv_a"
+                    android:id="@+id/definition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="货币贬值：钱罔来罔～落尾结束的开始都是看见的抠脚大汉健身房回家。" />
+                    android:layout_margin="10dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </FrameLayout>
