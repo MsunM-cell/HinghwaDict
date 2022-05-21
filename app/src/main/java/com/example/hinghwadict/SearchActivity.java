@@ -1,6 +1,8 @@
 package com.example.hinghwadict;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.os.Bundle;
@@ -19,10 +21,20 @@ import com.github.gzuliyujiang.wheelpicker.widget.OptionWheelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SearchActivity extends AppCompatActivity implements OnOptionPickedListener {
     private EditText searchBar;
     private OptionPicker picker;
     private TextView category;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private WordAdapter wordAdapter;
+    private List<SearchWordResponse.word> mWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +55,27 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
                                           KeyEvent event) {
                 if ((actionId == 0 || actionId == 3) && event != null) {
                     //点击搜索要做的操作
-                    Log.d("SEARCH", "55555");
+                    search();
                 }
                 return false;
             }
         });
 
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        mWords = new ArrayList<>();
+        wordAdapter = new WordAdapter();
+
+        recyclerView.setAdapter(wordAdapter);
     }
 
     public void selectCategory(View view) {
@@ -89,4 +116,49 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         Log.d("xz", String.valueOf(item));
         category.setText(String.valueOf(item));
     }
+
+    private void search() {
+        String key_word = searchBar.getText().toString();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.pxm.edialect.top/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService apiService = retrofit.create(ApiService.class);
+        apiService.getSearchWord(key_word).enqueue(new Callback<SearchWordResponse>() {
+            @Override
+            public void onResponse(Call<SearchWordResponse> call, Response<SearchWordResponse> response) {
+                if (response.body() != null) {
+                    List<SearchWordResponse.word> words = response.body().words;
+                    Log.d("retrofit", words.toString());
+                    if (words.size() != 0) {
+                        wordAdapter.setData(response.body().words);
+                        wordAdapter.notifyDataSetChanged();
+
+//                        Log.d("dataset", String.valueOf(wordAdapter.getItemCount()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchWordResponse> call, Throwable t) {
+                Log.d("retrofit", t.getMessage());
+            }
+        });
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

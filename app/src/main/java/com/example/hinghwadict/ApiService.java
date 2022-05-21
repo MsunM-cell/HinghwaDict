@@ -10,4 +10,7 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("website/word_of_the_day")
     Call<WordDayResponse> getHomeWord();
+
+    @GET("words")
+    Call<SearchWordResponse> getSearchWord(@Query("search") String search);
 }
