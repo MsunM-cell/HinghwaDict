@@ -13,4 +13,7 @@ public interface ApiService {
 
     @GET("words")
     Call<SearchWordResponse> getSearchWord(@Query("search") String search);
+
+    @GET("characters/words/v2")
+    Call<SearchPinyinResponse> getSearchCharacter(@Query("search") String search);
 }

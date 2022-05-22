@@ -28,6 +28,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 app:cardCornerRadius="12dp"
+                android:onClick="startSearch"
                 app:cardElevation="12dp"
                 app:contentPadding="8dp">
 
