@@ -7,6 +7,28 @@
     android:orientation="vertical"
     tools:context=".SearchActivity">
 
+    <TextView
+        android:id="@+id/hint1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:text="输入汉字查拼音"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/hint2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:text="忽略所有非汉字字符，暂不支持搜索繁体字"
+        android:textSize="16sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +43,7 @@
             android:layout_gravity="center"
             android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
             android:onClick="selectCategory"
-            android:text="词语"
+            android:text="拼音"
             android:textColor="#666666"
             android:textSize="18sp" />
 
@@ -30,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_search_24"
-            
+
             android:hint="兴化语记" />
 
         <!--        <androidx.appcompat.widget.SearchView-->
@@ -40,7 +62,6 @@
         <!--            android:iconifiedByDefault="false"-->
         <!--            app:queryHint="兴化语记" />-->
     </LinearLayout>
-
 
 
     <androidx.recyclerview.widget.RecyclerView

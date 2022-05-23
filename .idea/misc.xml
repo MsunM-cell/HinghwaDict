@@ -9,6 +9,9 @@
         <entry key="app/src/main/res/drawable/searchview_line.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_word.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/definition_page.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/other_page.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/pinyin_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/pronunciation_item.xml" value="0.3067708333333333" />
         <entry key="app/src/main/res/layout/word_item.xml" value="0.335" />

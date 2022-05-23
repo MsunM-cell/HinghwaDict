@@ -45,12 +45,17 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
     private PinyinAdapter pinyinAdapter;
     private LinearLayoutManager layoutManager1;
 
+    private TextView hint1, hint2;
+
     private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        hint1 = findViewById(R.id.hint1);
+        hint2 = findViewById(R.id.hint2);
 
         category = findViewById(R.id.category);
 
@@ -119,8 +124,8 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
 
     public void selectCategory(View view) {
         List<category> data = new ArrayList<>();
-        data.add(new category(1, "词语"));
-        data.add(new category(2, "拼音"));
+        data.add(new category(1, "拼音"));
+        data.add(new category(2, "词语"));
         picker = new OptionPicker(this);
 //        picker.setTitle("分类");
         picker.setBodyWidth(140);
@@ -156,9 +161,13 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         if (item_string.equals("词语")) {
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView1.setVisibility(View.GONE);
+            hint1.setVisibility(View.GONE);
+            hint2.setVisibility(View.GONE);
         } else if (item_string.equals("拼音")) {
             recyclerView.setVisibility(View.GONE);
             recyclerView1.setVisibility(View.VISIBLE);
+            hint1.setVisibility(View.VISIBLE);
+            hint2.setVisibility(View.VISIBLE);
         }
     }
 
