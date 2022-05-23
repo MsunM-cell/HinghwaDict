@@ -1,5 +1,6 @@
 package com.example.hinghwadict;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,8 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView character;
+        public TextView traditional;
+        public TextView area;
         private PronunciationAdapter pronunciationAdapter;
         private RecyclerView recyclerView;
         private LinearLayoutManager layoutManager;
@@ -41,8 +44,10 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
         public MyViewHolder(View v) {
             super(v);
             character = v.findViewById(R.id.character);
+            traditional = v.findViewById(R.id.traditional);
+            area = v.findViewById(R.id.area);
 
-            recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+            recyclerView = v.findViewById(R.id.recycler_view);
             recyclerView.setHasFixedSize(true);
 
             //设置布局管理器
@@ -53,7 +58,7 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
             flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);//按正常方向换行
             //justifyContent 属性定义了项目在主轴上的对齐方式。
             flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);//交叉轴的起点对齐。
-
+//            layoutManager = new LinearLayoutManager(v.getContext());
             recyclerView.setLayoutManager(flexboxLayoutManager);
 
             pronunciationAdapter = new PronunciationAdapter();
@@ -68,7 +73,7 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
     // Create new views (invoked by the layout manager)
     @Override
     public PinyinAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
+                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.pinyin_item, parent, false);
@@ -77,14 +82,22 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d("dataset", String.valueOf(position));
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.character.setText(mDataset.get(position).label);
-
-        List<SearchPinyinResponse.word> pronunciations = (List<SearchPinyinResponse.word>)mDataset.get(position).pronunciations.get(0).words;
+        SearchPinyinResponse.character character = mDataset.get(position);
+        holder.character.setText(character.label);
+        if (!character.label.equals(character.traditional)) {
+            holder.traditional.setVisibility(View.VISIBLE);
+            holder.traditional.setText(character.traditional);
+        } else {
+            holder.traditional.setVisibility(View.GONE);
+        }
+        holder.area.setText(character.pronunciations.get(0).county + "/" + character.pronunciations.get(0).town);
+        List<SearchPinyinResponse.word> pronunciations = character.pronunciations.get(0).words;
         holder.showPronunciation(pronunciations);
     }
 

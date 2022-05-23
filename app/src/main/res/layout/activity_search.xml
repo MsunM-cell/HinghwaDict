@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
             android:onClick="selectCategory"
-            android:text="拼音"
+            android:text="词语"
             android:textColor="#666666"
             android:textSize="18sp" />
 

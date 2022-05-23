@@ -125,7 +125,7 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
 //        picker.setTitle("分类");
         picker.setBodyWidth(140);
         picker.setData(data);
-        picker.setDefaultPosition(1);
+        picker.setDefaultPosition(0);
         picker.setOnOptionPickedListener(this);
         OptionWheelLayout wheelLayout = picker.getWheelLayout();
         wheelLayout.setIndicatorEnabled(false);
@@ -151,8 +151,15 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
 
     @Override
     public void onOptionPicked(int position, Object item) {
-        Log.d("xz", String.valueOf(item));
-        category.setText(String.valueOf(item));
+        String item_string = item.toString();
+        category.setText(item_string);
+        if (item_string.equals("词语")) {
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView1.setVisibility(View.GONE);
+        } else if (item_string.equals("拼音")) {
+            recyclerView.setVisibility(View.GONE);
+            recyclerView1.setVisibility(View.VISIBLE);
+        }
     }
 
     private void search() {

@@ -1,9 +1,11 @@
 package com.example.hinghwadict;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.MyViewHolder> 
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+
         public TextView word;
         public TextView pinyin;
         public TextView ipa;
@@ -58,6 +61,18 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.MyViewHolder> 
         holder.pinyin.setText(mDataset.get(position).standard_pinyin);
         holder.ipa.setText("/" + mDataset.get(position).standard_ipa + "/");
         holder.definition.setText(mDataset.get(position).definition);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.d("click", String.valueOf(holder.getAdapterPosition()));
+                int position = holder.getAdapterPosition();
+                SearchWordResponse.word w = mDataset.get(position);
+                Log.d("word", String.valueOf(w));
+//                Intent intent = new Intent(v.getContext(), SearchActivity.class);
+//                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
