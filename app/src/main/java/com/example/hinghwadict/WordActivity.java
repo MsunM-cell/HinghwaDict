@@ -33,10 +33,10 @@ public class WordActivity extends AppCompatActivity {
     private TextView detail_pinyin;
     private TextView detail_ipa;
 
-   private MyFragment1 myFragment1;
-   private MyFragment2 myFragment2;
+    private MyFragment1 myFragment1;
+    private MyFragment2 myFragment2;
 
-    String Title[] = {"释义", "其他"};
+    String[] Title = {"释义", "其他"};
     List<Fragment> fragments;
 
     TabLayout tabLayout;
@@ -52,8 +52,6 @@ public class WordActivity extends AppCompatActivity {
         detail_pinyin = findViewById(R.id.detail_pinyin);
         detail_ipa = findViewById(R.id.detail_ipa);
 
-
-
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
 
@@ -64,7 +62,7 @@ public class WordActivity extends AppCompatActivity {
         fragments.add(myFragment1);
         fragments.add(myFragment2);
 
-        viewPager.setAdapter(new myAdapter(getSupportFragmentManager(),fragments));
+        viewPager.setAdapter(new myAdapter(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
 
         getWord();
@@ -99,12 +97,10 @@ public class WordActivity extends AppCompatActivity {
     }
 
     private class myAdapter extends FragmentPagerAdapter {
-
         private List<Fragment> myFragment;
 
         public myAdapter(@NonNull FragmentManager fm, List<Fragment> fs) {
             super(fm);
-
             myFragment = fs;
         }
 
@@ -132,7 +128,7 @@ public class WordActivity extends AppCompatActivity {
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.definition_page,container,false);
+            View view = inflater.inflate(R.layout.definition_page, container, false);
             detail_definition = view.findViewById(R.id.detail_definition);
             return view;
         }
@@ -144,10 +140,11 @@ public class WordActivity extends AppCompatActivity {
 
     public static class MyFragment2 extends Fragment {
         TextView detail_other;
+
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.other_page,container,false);
+            View view = inflater.inflate(R.layout.other_page, container, false);
             detail_other = view.findViewById(R.id.detail_other);
             return view;
         }
