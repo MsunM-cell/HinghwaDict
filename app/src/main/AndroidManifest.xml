@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HinghwaDict">
         <activity
-            android:name=".MainActivity"
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".WordActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
