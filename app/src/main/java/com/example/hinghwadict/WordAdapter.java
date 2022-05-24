@@ -55,6 +55,10 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.MyViewHolder> 
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 SearchWordResponse.word w = mDataset.get(position);
+
+                Intent intent = new Intent(v.getContext(), WordActivity.class);
+                intent.putExtra("random", w.id);
+                v.getContext().startActivity(intent);
             }
         });
     }
