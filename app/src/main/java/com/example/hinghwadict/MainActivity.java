@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void startSearch(View view) {
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void getRandomWord(View view) {
+        Random random = new Random();
+        int r = random.nextInt(6106) + 1;
+        Log.d("random", String.valueOf(r));
+        Intent intent = new Intent(this, WordActivity.class);
+        intent.putExtra("random", r);
         startActivity(intent);
     }
 }

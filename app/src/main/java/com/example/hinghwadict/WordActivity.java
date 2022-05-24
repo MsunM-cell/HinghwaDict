@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,8 @@ public class WordActivity extends AppCompatActivity {
     private MyFragment1 myFragment1;
     private MyFragment2 myFragment2;
 
+    public String id;
+
     String[] Title = {"释义", "其他"};
     List<Fragment> fragments;
 
@@ -46,6 +49,10 @@ public class WordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word);
+
+        Intent intent = getIntent();
+        int r = intent.getIntExtra("random", 0);
+        id = String.valueOf(r);
 
         detail_word = findViewById(R.id.detail_word);
         detail_views = findViewById(R.id.detail_views);
@@ -74,7 +81,7 @@ public class WordActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
-        apiService.getWordDetail("2").enqueue(new Callback<WordDetailResponse>() {
+        apiService.getWordDetail(id).enqueue(new Callback<WordDetailResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<WordDetailResponse> call, Response<WordDetailResponse> response) {
