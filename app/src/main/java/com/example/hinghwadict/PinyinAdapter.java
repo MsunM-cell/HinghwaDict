@@ -21,8 +21,6 @@ import java.util.List;
 
 public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHolder> {
     private List<SearchPinyinResponse.character> mDataset;
-    private Context context;
-
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -38,7 +36,6 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
 
         public void showPronunciation(List<SearchPinyinResponse.word> pronunciations) {
             pronunciationAdapter.setData(pronunciations);
-//            pronunciationAdapter.notifyDataSetChanged();
         }
 
         public MyViewHolder(View v) {
@@ -58,7 +55,6 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
             flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);//按正常方向换行
             //justifyContent 属性定义了项目在主轴上的对齐方式。
             flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);//交叉轴的起点对齐。
-//            layoutManager = new LinearLayoutManager(v.getContext());
             recyclerView.setLayoutManager(flexboxLayoutManager);
 
             pronunciationAdapter = new PronunciationAdapter();
@@ -85,7 +81,6 @@ public class PinyinAdapter extends RecyclerView.Adapter<PinyinAdapter.MyViewHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.d("dataset", String.valueOf(position));
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         SearchPinyinResponse.character character = mDataset.get(position);

@@ -52,17 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_search_24"
-
             android:hint="兴化语记" />
-
-        <!--        <androidx.appcompat.widget.SearchView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="@drawable/searchview_line"-->
-        <!--            android:iconifiedByDefault="false"-->
-        <!--            app:queryHint="兴化语记" />-->
     </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
