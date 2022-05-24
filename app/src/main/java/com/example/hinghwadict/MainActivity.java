@@ -22,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    private int id;
     private TextView random_word;
     private TextView word_word;
     private TextView definition;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.body().errorCode != -1) {
                         WordDayResponse.Word word = response.body().word;
                         Log.d("retrofit", word.toString());
+                        id = word.id;
                         word_word.setText(word.word);
                         definition.setText(word.definition);
                     }
@@ -78,9 +80,14 @@ public class MainActivity extends AppCompatActivity {
     public void getRandomWord(View view) {
         Random random = new Random();
         int r = random.nextInt(6106) + 1;
-        Log.d("random", String.valueOf(r));
         Intent intent = new Intent(this, WordActivity.class);
         intent.putExtra("random", r);
+        startActivity(intent);
+    }
+
+    public void getWordDetail(View view) {
+        Intent intent = new Intent(this, WordActivity.class);
+        intent.putExtra("random", id);
         startActivity(intent);
     }
 }
