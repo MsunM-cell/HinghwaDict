@@ -1,57 +1,57 @@
 package com.example.hinghwadict;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
+import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private int id;
-    private TextView random_word;
-    private TextView word_word;
-    private TextView definition;
+    private ViewPager viewPager;
+    private LocalActivityManager activity_manger;
+    private BottomNavigationBar bottomNavigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
+        viewPager = findViewById(R.id.view_pager);
 
-        ImageView cover = findViewById(R.id.cover);
-        String cover_url = "https://cos.edialect.top/miniprogram/fm.gif";
-        Glide.with(this).load(cover_url).into(cover);
-
-        random_word = findViewById(R.id.random_word);
-        word_word = findViewById(R.id.word);
-        definition = findViewById(R.id.definition);
-
-        // 加载底部导航栏
+        // 获取底部导航栏
         getBottomNavigationBar();
+        // 为viewPager设置适配器
+        setAdapter(savedInstanceState);
+    }
 
-        // 获取每日一词
-        getWord();
+    private void setAdapter(Bundle savedInstanceState) {
+        activity_manger = new LocalActivityManager(this, true);
+        activity_manger.dispatchCreate(savedInstanceState);
+
+        List<View> list = new ArrayList<View>();
+        Intent intent = new Intent(this, HomeActivity.class);
+        View home_view = activity_manger.startActivity("HomeActivity", intent).getDecorView();
+        list.add(home_view);
+        Intent intent2 = new Intent(this, ArticlesActivity.class);
+        View articles_view = activity_manger.startActivity("ArticlesActivity", intent2).getDecorView();
+        list.add(articles_view);
+
+        PagerAdapter adapter = new PagerAdapter(list);
+        viewPager.setAdapter(adapter);
     }
 
     private void getBottomNavigationBar() {
-        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
 
+        // 设置底部导航栏的相关属性
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_baseline_home_24, ""))
                 .addItem(new BottomNavigationItem(R.drawable.ic_baseline_article_24, ""))
@@ -61,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 .setBarBackgroundColor("#42C1A9")
                 .initialise();
 
+        // 设置底部导航栏选择时的监听器
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-
+                viewPager.setCurrentItem(position);
             }
 
             @Override
@@ -77,50 +78,56 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getWord() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.pxm.edialect.top/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
+        private List<View> list;
 
-        ApiService apiService = retrofit.create(ApiService.class);
-        apiService.getHomeWord().enqueue(new Callback<WordDayResponse>() {
-            @Override
-            public void onResponse(Call<WordDayResponse> call, Response<WordDayResponse> response) {
-                if (response.body() != null) {
-                    if (response.body().errorCode != -1) {
-                        WordDayResponse.Word word = response.body().word;
-                        Log.d("retrofit", word.toString());
-                        id = word.id;
-                        word_word.setText(word.word);
-                        definition.setText(word.definition);
-                    }
-                }
-            }
+        public PagerAdapter(List<View> list) {
+            this.list = list;
+        }
 
-            @Override
-            public void onFailure(Call<WordDayResponse> call, Throwable t) {
-                Log.d("retrofit", t.getMessage());
-            }
-        });
-    }
+        @Override
+        public int getCount() {
+            return list.size();
+        }
 
-    public void startSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
 
-    public void getRandomWord(View view) {
-        Random random = new Random();
-        int r = random.nextInt(6106) + 1;
-        Intent intent = new Intent(this, WordActivity.class);
-        intent.putExtra("random", r);
-        startActivity(intent);
-    }
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            ViewPager viewpager = (ViewPager) container;
+            View view = list.get(position);
+            viewpager.addView(view);
+            return view;
+        }
 
-    public void getWordDetail(View view) {
-        Intent intent = new Intent(this, WordActivity.class);
-        intent.putExtra("random", id);
-        startActivity(intent);
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            ViewPager viewpager = (ViewPager) container;
+            View view = list.get(position);
+            viewpager.removeView(view);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,6 +2,7 @@ package com.example.hinghwadict;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -24,10 +25,15 @@ public class ArticleActivity extends AppCompatActivity {
     private TextView views;
     private TextView description;
 
+    private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("article", 0);
 
         // 获取文章的标题、发布时间、访问量和简介对应的组件
         title = findViewById(R.id.article_title);
@@ -36,7 +42,7 @@ public class ArticleActivity extends AppCompatActivity {
         description = findViewById(R.id.article_description);
 
         // 获取文章的有用信息
-        getArticle(99);
+        getArticle(id);
     }
 
     private void getArticle(int id) {

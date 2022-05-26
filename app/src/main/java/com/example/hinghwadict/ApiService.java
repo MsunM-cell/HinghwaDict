@@ -25,4 +25,7 @@ public interface ApiService {
 
     @GET("articles/{id}")
     Call<ArticleResponse> getArticle(@Path("id") String id, @Header("token") String token);
+
+    @GET("website/hot_articles")
+    Call<HotArticlesResponse> getHotArticles();
 }
