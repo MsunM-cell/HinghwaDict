@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -40,8 +42,39 @@ public class MainActivity extends AppCompatActivity {
         word_word = findViewById(R.id.word);
         definition = findViewById(R.id.definition);
 
+        // 加载底部导航栏
+        getBottomNavigationBar();
+
         // 获取每日一词
         getWord();
+    }
+
+    private void getBottomNavigationBar() {
+        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_baseline_home_24, ""))
+                .addItem(new BottomNavigationItem(R.drawable.ic_baseline_article_24, ""))
+                .setFirstSelectedPosition(0)
+                .setMode(BottomNavigationBar.MODE_SHIFTING_NO_TITLE)
+                .setActiveColor("#FFFFFF")
+                .setBarBackgroundColor("#42C1A9")
+                .initialise();
+
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position) {
+
+            }
+
+            @Override
+            public void onTabUnselected(int position) {
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+            }
+        });
     }
 
     private void getWord() {
