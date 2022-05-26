@@ -57,11 +57,13 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         searchBar.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         searchBar.setSingleLine(true);
 
+        // 设置搜索框确认的监听器
         searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId,
                                           KeyEvent event) {
                 if ((actionId == 0 || actionId == 3) && event != null) {
+                    // 开始搜索
                     search();
                 }
                 return false;
@@ -75,11 +77,13 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
 
         apiService = retrofit.create(ApiService.class);
 
+        // 设置词语展示时的RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        // 设置单字拼音展示时的RecyclerView
         recyclerView1 = (RecyclerView) findViewById(R.id.recycler_view_1);
         recyclerView1.setHasFixedSize(true);
         layoutManager1 = new LinearLayoutManager(this);
@@ -88,10 +92,12 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         wordAdapter = new WordAdapter();
         pinyinAdapter = new PinyinAdapter();
 
+        // 为RecyclerView设置适配器
         recyclerView.setAdapter(wordAdapter);
         recyclerView1.setAdapter(pinyinAdapter);
     }
 
+    // 设置搜索分类，包括拼音和词语
     public void selectCategory(View view) {
         List<category> data = new ArrayList<>();
         data.add(new category(1, "拼音"));
@@ -112,6 +118,7 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         picker.show();
     }
 
+    // picker的确认选择时的监听器
     @Override
     public void onOptionPicked(int position, Object item) {
         String item_string = item.toString();
@@ -133,12 +140,13 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
         String category_string = category.getText().toString();
         String key_word = searchBar.getText().toString();
         if (category_string.equals("词语"))
-            searchWord(key_word);
+            searchWord(key_word); // 搜索词语
         else if (category_string.equals("拼音"))
-            searchPinyin(key_word);
+            searchPinyin(key_word); // 搜索拼音
     }
 
     private void searchWord(String key_word) {
+        // 发起网络请求
         apiService.getSearchWord(key_word).enqueue(new Callback<SearchWordResponse>() {
             @Override
             public void onResponse(Call<SearchWordResponse> call, Response<SearchWordResponse> response) {
@@ -159,6 +167,7 @@ public class SearchActivity extends AppCompatActivity implements OnOptionPickedL
     }
 
     private void searchPinyin(String key_word) {
+        // 发起网络请求
         apiService.getSearchCharacter(key_word).enqueue(new Callback<SearchPinyinResponse>() {
             @Override
             public void onResponse(Call<SearchPinyinResponse> call, Response<SearchPinyinResponse> response) {

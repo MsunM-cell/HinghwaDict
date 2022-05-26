@@ -2,8 +2,6 @@ package com.example.hinghwadict;
 
 import androidx.annotation.NonNull;
 
-import java.io.Serializable;
-
 public class category {
     private int id;
     private String name;

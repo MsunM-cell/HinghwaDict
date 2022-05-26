@@ -50,6 +50,7 @@ public class WordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word);
 
+        // 获取从一个活动传过来的词语id，以便进行获取相关词语的消息
         Intent intent = getIntent();
         int r = intent.getIntExtra("random", 0);
         id = String.valueOf(r);
@@ -59,6 +60,7 @@ public class WordActivity extends AppCompatActivity {
         detail_pinyin = findViewById(R.id.detail_pinyin);
         detail_ipa = findViewById(R.id.detail_ipa);
 
+        // 设置tab展示，可选包括释义和其他
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
 
@@ -72,6 +74,7 @@ public class WordActivity extends AppCompatActivity {
         viewPager.setAdapter(new myAdapter(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
 
+        // 获取词语的有用信息
         getWord();
     }
 
@@ -81,6 +84,7 @@ public class WordActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService apiService = retrofit.create(ApiService.class);
+        // 发起网络请求
         apiService.getWordDetail(id).enqueue(new Callback<WordDetailResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -129,6 +133,7 @@ public class WordActivity extends AppCompatActivity {
         }
     }
 
+    // 释义的展示碎片
     public static class MyFragment1 extends Fragment {
         TextView detail_definition;
 
@@ -145,6 +150,7 @@ public class WordActivity extends AppCompatActivity {
         }
     }
 
+    // 其他的展示碎片
     public static class MyFragment2 extends Fragment {
         TextView detail_other;
 

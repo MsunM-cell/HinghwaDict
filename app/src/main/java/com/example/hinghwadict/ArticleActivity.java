@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ArticleActivity extends AppCompatActivity {
     private MarkdownView mMarkdownView;
-    private String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IlNwaWRlciIsImlkIjo2LCJleHAiOjE2NTM1NjY1NDMuMzgwMDcxfQ.sbL2hHVuTiOafc_eW1yv7o2PV6mLCw5rCqytddxMupo";
+    private String token = "";
 
     private TextView title;
     private TextView publish_time;
